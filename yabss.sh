@@ -64,3 +64,4 @@ homehostupdate(){
 
 # [0] http://www.linuxjournal.com/content/return-values-bash-functions
 # [1] http://www.cyberciti.biz/faq/bash-for-loop/
+# [2] http://linuxcommando.blogspot.de/2008/03/using-sed-to-extract-lines-in-text-file.html
