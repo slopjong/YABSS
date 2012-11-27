@@ -62,6 +62,62 @@ homehostupdate(){
     hostupdate $HOME_HOST $ip
 }
 
+xor(){
+    if [ ${#1} != ${#2} ];
+    then
+        echo "The length of both passed arguments differ"
+    else
+        for ((i=1; i <= ${#1}; i++))
+        do
+            echo -n $(($(echo ${1[$i]})^$(echo ${2[$i]})))
+        done
+    fi
+    
+    echo ""
+}
+
+# based http://stackoverflow.com/a/11120761/1514866
+# TODO: this cannot handle long hex numbers
+hex2bin(){
+    if [ $# -eq 0 ]
+    then
+        echo "Argument(s) not supplied "
+        echo "Usage: hex2bin hex_number(s)"
+    else
+        
+        while [ $# -ne 0 ]
+        do  
+            for ((i=1; i <= ${#1}; i++))
+            do
+                DecNum=`printf "%d" 0x${1[$i]}`
+                Binary=
+                Number=$DecNum
+        
+                while [ $DecNum -ne 0 ]
+                do
+                    Bit=$(expr $DecNum % 2)
+                    Binary=$Bit$Binary
+                    DecNum=$(expr $DecNum / 2)
+                done
+                    
+                #fill up with leading zeros
+                for ((z=0; i <= $((4-${#Binary})); i++))
+                do
+                    echo -n "0"
+                done
+                
+                echo -n "$Binary"
+                
+                unset Binary
+            done
+            
+            shift
+            # Shifts command line arguments one step.Now $1 holds second argument
+            
+        done
+    fi
+}
+
 # [0] http://www.linuxjournal.com/content/return-values-bash-functions
 # [1] http://www.cyberciti.biz/faq/bash-for-loop/
 # [2] http://linuxcommando.blogspot.de/2008/03/using-sed-to-extract-lines-in-text-file.html
