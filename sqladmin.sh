@@ -185,7 +185,6 @@ case $COMMAND in
         dbname="$1"
         dbuser="$2"
         dbpass="$3"
-        dbtable=bild
 
         tablesjoin=$(get_tables "$dbname" "$dbuser" "$dbpass")
         
@@ -205,15 +204,20 @@ case $COMMAND in
         
     import)
 
-        EXPECTED_ARGS=2
+        EXPECTED_ARGS=4
         
         if [ $# -ne $EXPECTED_ARGS ]
         then
-          echo "Usage: $0 import dbname statements.sql"
+          echo "Usage: $0 import dbname dbuser dbpass statements.sql"
           exit $E_BADARGS
         fi
         
-        $MYSQL -u root -p -h localhost "$1" < "$2"
+	dbname="$1"
+        dbuser="$2"
+        dbpass="$3"
+	dbdump="$4"
+	
+        $MYSQL --user=$dbuser --password=$dbpass -h localhost "$dbname" < "$dbdump"
         ;;
     
     delete-user)
