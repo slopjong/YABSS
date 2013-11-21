@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mkdir -p pdf
+echo pdf > .gitignore
+find . -name "*.docx" -exec libreoffice --invisible --convert-to pdf --outdir pdf {} \; -exec sh -c 'echo {} >> .gitignore'  \;
+
+# TODO: it'd be nice to reflect the orinal subdirectories in ./pdf
+#            See http://tldp.org/LDP/abs/html/parameter-substitution.html
